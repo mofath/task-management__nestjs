@@ -4,7 +4,7 @@ import { ConfigModule } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { config } from './config';
 
-const { username, password, database, ...dbConfig } = config().DATABASE;
+const { DATABASE: databaseConfig } = config();
 
 @Module({
   imports: [
@@ -13,12 +13,9 @@ const { username, password, database, ...dbConfig } = config().DATABASE;
       load: [config],
     }),
     SequelizeModule.forRoot({
-      username,
-      password,
-      database,
-      ...dbConfig,
-      autoLoadModels: true,
+      ...databaseConfig,
       synchronize: true,
+      autoLoadModels: true,
     }),
     TasksModule,
   ],
