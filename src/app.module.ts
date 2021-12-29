@@ -3,6 +3,7 @@ import { TasksModule } from './tasks/tasks.module';
 import { ConfigModule } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { config } from './config';
+import { AuthModule } from './auth/auth.module';
 
 const { DATABASE: databaseConfig } = config();
 
@@ -18,6 +19,7 @@ const { DATABASE: databaseConfig } = config();
       autoLoadModels: true,
     }),
     TasksModule,
+    AuthModule,
   ],
 })
 export class AppModule {}
