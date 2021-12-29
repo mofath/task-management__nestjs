@@ -1,18 +1,25 @@
 import { Body, Injectable, NotFoundException } from '@nestjs/common';
-import { Task, TaskStatus } from './task.model';
+import { ITask, ITaskStatus } from './task.entity';
 import { v4 as uuidv4 } from 'uuid';
 import { CreateTaskDto } from './dto/createTask.dto';
-
+import { TaskRepository } from './task.repository';
+import { InjectModel } from '@nestjs/sequelize';
+import { Task } from './task.entity';
 @Injectable()
 export class TasksService {
-  private tasks: Task[] = [];
+  private tasks: ITask[] = [];
 
-  getAllTasks(): Task[] {
-    return this.tasks;
+  constructor(
+    @InjectModel(Task)
+    private readonly taskModel: typeof Task
+  ) {}
+
+  async getAllTasks(): Promise<ITask[]> {
+    return this.taskModel.findAll();
   }
 
-  getTaskById(id: string): Task {
-    const found = this.tasks.find((task) => task.id === id);
+  async getTaskById(id: string): Promise<ITask> {
+    const found = await this.taskModel.findByPk(id, { raw: true });
 
     if (!found) {
       throw new NotFoundException(`Task with ${id} not found`);
@@ -21,13 +28,16 @@ export class TasksService {
     return found;
   }
 
-  createTask(@Body() createTaskDto: CreateTaskDto): Task {
-    const task: Task = {
-      ...createTaskDto,
-      id: uuidv4(),
-      status: TaskStatus.OPEN,
-    };
-    this.tasks.push(task);
+  async createTask(@Body() createTaskDto: CreateTaskDto): Promise<ITask> {
+    const { title, description } = createTaskDto;
+
+    const task = new Task({
+      title,
+      description,
+      status: ITaskStatus.OPEN,
+    });
+
+    await task.save();
 
     return task;
   }
@@ -36,9 +46,9 @@ export class TasksService {
     this.tasks = this.tasks.filter((task) => task.id !== id);
   }
 
-  updateTask(id: string, status: TaskStatus): Task {
-    const task = this.getTaskById(id);
-    task.status = status;
-    return task;
-  }
+  // updateTask(id: string, status: ITaskStatus): ITask {
+  //   const task = this.getTaskById(id);
+  //   task.status = status;
+  //   return task;
+  // }
 }
