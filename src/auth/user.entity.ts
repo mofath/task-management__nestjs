@@ -8,10 +8,9 @@ export interface IUser {
 
 @Table({})
 export class User extends Model {
-  @Column
-  title: string;
-
-  @Column
+  @Column({
+    unique: true,
+  })
   username: string;
 
   @Column
