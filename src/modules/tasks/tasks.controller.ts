@@ -9,7 +9,7 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
-import { ITask, ITaskStatus } from './task.entity';
+import { ITask, ITaskStatus } from '../../entity/task.entity';
 import { TasksService } from './tasks.service';
 import { CreateTaskDto } from './dto/createTask.dto';
 import { TaskStatusValidationPipe } from './pipes/task-status-validation.pipe';

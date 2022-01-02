@@ -1,10 +1,10 @@
 import { Body, Injectable, NotFoundException } from '@nestjs/common';
-import { ITask, ITaskStatus } from './task.entity';
+import { ITask, ITaskStatus } from '../../entity/task.entity';
 import { v4 as uuidv4 } from 'uuid';
 import { CreateTaskDto } from './dto/createTask.dto';
 import { TaskRepository } from './task.repository';
 import { InjectModel } from '@nestjs/sequelize';
-import { Task } from './task.entity';
+import { Task } from '../../entity/task.entity';
 @Injectable()
 export class TasksService {
   private tasks: ITask[] = [];

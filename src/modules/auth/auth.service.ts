@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import * as bcrypt from 'bcrypt';
 import { SignupDto } from './dto/signupDto';
-import { IUser, User } from './user.entity';
+import { IUser, User } from '../../entity/user.entity';
 
 @Injectable()
 export class AuthService {

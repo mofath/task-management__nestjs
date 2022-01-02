@@ -3,7 +3,7 @@ import {
   BadRequestException,
   PipeTransform,
 } from '@nestjs/common';
-import { ITaskStatus } from '../task.entity';
+import { ITaskStatus } from '../../../entity/task.entity';
 
 export class TaskStatusValidationPipe implements PipeTransform {
   readonly allowedStatuses = [

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import { ITask, ITaskStatus, Task } from './task.entity';
+import { ITask, ITaskStatus, Task } from '../../entity/task.entity';
 
 @Injectable()
 export class TaskRepository {
